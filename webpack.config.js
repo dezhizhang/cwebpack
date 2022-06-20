@@ -1,41 +1,45 @@
-
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { NODE_ENV } = process.env;
 console.log(NODE_ENV);
 
 module.exports = {
-    mode:NODE_ENV === 'prod' ? 'production':'development',
-    entry:'./src/index',
-    output:{
-        path:path.resolve(__dirname,'build'),
-        filename:'build.js'
+    mode: NODE_ENV === "prod" ? "production" : "development",
+    entry: "./src/index",
+    output: {
+        path: path.resolve(__dirname, "build"),
+        filename: "build.js",
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
-                test:/\.css$/,
-                use:[
-                    'style-loader',
-                    'css-loader'
-                ]
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
+            {
+                test:/\.less$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "less-loader",
+                  ],
             }
-        ]
+        ],
     },
-    devServer:{
-        static:path.resolve(__dirname,'public'),
-        port:8000,
-        open:true,
+    devServer: {
+        static: path.resolve(__dirname, "public"),
+        port: 8000,
+        open: true,
     },
-    plugins:[
+    plugins: [
         //配置全局变量
         new HtmlWebpackPlugin({
-            template:'./public/index.html',
-            inject:'body'
+            template: "./public/index.html",
+            inject: "body",
         }),
         new webpack.DefinePlugin({
-            'REACT_ENV':JSON.stringify(NODE_ENV)
-        })
-    ]
-}
+            REACT_ENV: JSON.stringify(NODE_ENV),
+        }),
+    ],
+};
