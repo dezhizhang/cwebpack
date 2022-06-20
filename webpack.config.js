@@ -23,6 +23,11 @@ module.exports = {
             }
         ]
     },
+    devServer:{
+        static:path.resolve(__dirname,'public'),
+        port:8000,
+        open:true,
+    },
     plugins:[
         //配置全局变量
         new HtmlWebpackPlugin({

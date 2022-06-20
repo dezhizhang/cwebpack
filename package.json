@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=test webpack ",
-    "start": "cross-env NODE_ENV=dev webpack-dev-server --watch"
+    "start": "cross-env NODE_ENV=dev webpack-dev-server"
   },
   "repository": {
     "type": "git",
