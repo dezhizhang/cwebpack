@@ -1,8 +1,9 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebpckRunPlugin = require('./plugins/WebpckRunPlugin');
 const { NODE_ENV } = process.env;
-console.log(NODE_ENV);
+
 
 module.exports = {
     mode: NODE_ENV === "prod" ? "production" : "development",
@@ -41,5 +42,6 @@ module.exports = {
         new webpack.DefinePlugin({
             REACT_ENV: JSON.stringify(NODE_ENV),
         }),
+        new WebpckRunPlugin(),
     ],
 };
