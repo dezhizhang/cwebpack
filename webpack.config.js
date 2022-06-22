@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const WebpckRunPlugin = require('./plugins/WebpckRunPlugin');
+const WebpckRunPlugin = require('./plugins/webpck-run-plugin')
 const { NODE_ENV } = process.env;
 
 

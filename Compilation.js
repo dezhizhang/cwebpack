@@ -1,3 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+
+function toUnixPath(path) {
+    return path.replace(/\\/g,'/');
+}
+
+const baseDir = toUnixPath(process.cwd());
+
 class Compilation{
     constructor(options) {
         this.options = options;
@@ -14,7 +23,11 @@ class Compilation{
         }else {
             entry = this.options.entry;
         }
-        //
+        //从入口文件出发，调用所有配置的loader
+        for(let entryName in entry) {
+            let entryFilePath = path.posix.join(baseDir,entry[entryName]);
+            console.log('entryFilePath',entryFilePath);
+        }
     }
 }
 
