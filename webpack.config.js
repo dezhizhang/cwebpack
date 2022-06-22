@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpckRunPlugin = require('./plugins/WebpckRunPlugin');
 const { NODE_ENV } = process.env;
 
@@ -35,13 +34,13 @@ module.exports = {
     },
     plugins: [
         //配置全局变量
-        new HtmlWebpackPlugin({
-            template: "./public/index.html",
-            inject: "body",
-        }),
-        new webpack.DefinePlugin({
-            REACT_ENV: JSON.stringify(NODE_ENV),
-        }),
+        // new HtmlWebpackPlugin({
+        //     template: "./public/index.html",
+        //     inject: "body",
+        // }),
+        // new webpack.DefinePlugin({
+        //     REACT_ENV: JSON.stringify(NODE_ENV),
+        // }),
         new WebpckRunPlugin(),
     ],
 };
