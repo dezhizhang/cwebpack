@@ -19,7 +19,7 @@ class Compiler{
     }
     compile(callback) {
         let compilation = new Compilation();
-        
+        compilation.build(callback)
     }
 }
 
