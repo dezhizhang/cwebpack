@@ -26,8 +26,30 @@ class Compilation{
         //从入口文件出发，调用所有配置的loader
         for(let entryName in entry) {
             let entryFilePath = path.posix.join(baseDir,entry[entryName]);
+            //从入口文件出发，调用所有配置的loader规则
+            let entryModule = this.buildModule(entryName,entryFilePath);
+
             console.log('entryFilePath',entryFilePath);
         }
+    }
+    buildModule(name,modulePath) {
+        //读取模块内容
+        let sourceCode = fs.readFileSync(modulePath,'utf-8');
+        //查找对应的loader
+        let loaders = [];
+        let rules = this.options.module.rules || [];
+        rules.forEach(rule => {
+            let test = rule.test;
+            if(modulePath.match(test)) {
+                loaders.push(...rule.use);
+            }
+        });
+
+        //自右向左对模块进行转换
+        sourceCode = loaders.reduceRight((sourceCode,loader) => {
+            return require(loader)(sourceCode);
+        },sourceCode)
+
     }
 }
 
