@@ -21,7 +21,7 @@ class Compilation{
         this.assets = [];
         this.fileDependencies = [];
     }
-    build() {
+    build(callback) {
         //5根据配置文件的entry的配置项找到所有的入口
         let entry = {};
         if(typeof this.options.entry === 'string') {
@@ -34,8 +34,27 @@ class Compilation{
             let entryFilePath = path.posix.join(baseDir,entry[entryName]);
             //从入口文件出发，调用所有配置的loader规则
             let entryModule = this.buildModule(entryName,entryFilePath);
+            this.modules.push(entryModule);
 
-            console.log('entryModule',entryModule);
+            //把所有的模块编译完成后，根据模块之前的依赖关系组件成一个个chunk
+            let chunk = {
+                name:entryName,
+                entryModule,
+                modules:this.modules.filter(item=>item.name.includes(entryName)),
+            }
+            this.chunks.push(chunk);
+            //再把各个代码的chunk转换成一个个的文件asset加入到输出列表
+            this.chunks.forEach((chunk) => {
+                let filename = this.options.output.filename.replace('[name]',chunk.name);
+                this.assets[filename] = getSource(chunk);
+            });
+            
+            callback(null,{
+                chunks:this.chunks,
+                modules:this.modules,
+                assets:this.assets
+            },this.fileDependencies);
+          
         }
     }
     buildModule(name,modulePath) {
@@ -99,6 +118,34 @@ class Compilation{
         });
         return module;
     }
+}
+
+function getSource(chunk){
+    return `
+    (() => {
+        var modules = {
+            ${chunk.modules.map((module) => `"${module.id}":(module) =>{
+                ${module._source}
+            }`
+        )}
+        };
+        var cache = {},
+        function require(moduleId) {
+            var cachedModule = cache[moduleId];
+            if(cachedModule !== undefined) {
+                return cachedModule.exports;
+            }
+            var module = (chche[moduleId]) =>{
+                exports:{}
+            });
+            modules[moduleId](module,module.exports,require);
+            return modules.exports;
+            var exports = {};
+            ${chunk.entryModule._source}
+        }
+    })();
+    `;
+   
 }
 
 function tryExtensions(modulePath,extensions) {
