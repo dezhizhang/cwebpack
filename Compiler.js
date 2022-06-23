@@ -1,5 +1,5 @@
 
-const { SyncBailHook,SyncHook } = require('tapable');
+const { SyncHook } = require('tapable');
 const Compilation = require('./Compilation');
 class Compiler{
     constructor(options) {
@@ -18,7 +18,7 @@ class Compiler{
         this.compile(onCompiled);
     }
     compile(callback) {
-        let compilation = new Compilation();
+        let compilation = new Compilation(this.options);
         compilation.build(callback)
     }
 }

@@ -6,7 +6,7 @@ const { NODE_ENV } = process.env;
 
 module.exports = {
     mode: NODE_ENV === "prod" ? "production" : "development",
-    entry: "./src/index",
+    entry: "./src/index.js",
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "build.js",
@@ -26,6 +26,9 @@ module.exports = {
                   ],
             }
         ],
+    },
+    resolve:{
+        extensions:['','.js','.jsx']
     },
     devServer: {
         static: path.resolve(__dirname, "public"),

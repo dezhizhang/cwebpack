@@ -29,7 +29,12 @@
     "webpack-dev-server": "^4.9.2"
   },
   "dependencies": {
+    "@babel/generator": "^7.18.2",
+    "@babel/parser": "^7.18.5",
+    "@babel/traverse": "^7.18.5",
+    "@babel/types": "^7.18.4",
     "css-loader": "^6.7.1",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "tapable": "^2.2.1"
   }
 }
