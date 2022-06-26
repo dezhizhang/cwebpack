@@ -21,7 +21,8 @@ class Compiler{
 
             callback(err,{
                 toJson:() => stats
-            })
+            });
+            
             this.hooks.done.call();
         }
         // 开始编译
